@@ -1,26 +1,51 @@
 # CloudDash
 
-## Project Documentation
+A responsive cloud infrastructure monitoring dashboard built with vanilla HTML, CSS, and JavaScript.
 
-### Features
-- Feature 1: Description of feature 1
-- Feature 2: Description of feature 2
+## Features
 
-### Tech Stack
-- Technology 1
-- Technology 2
+### JavaScript Features
+- **Real-Time Animated Charts** — Uses the HTML5 Canvas API to render live-updating CPU and memory usage line charts and a traffic-by-region donut chart. Data is simulated and scrolls in real time.
+- **Dynamic Search & Filtering** — Two-layer filtering combines a text search (across server names, IPs, regions, and instance types) with a status dropdown. Results update instantly via DOM manipulation.
+- **Dark/Light Theme Toggle** — Switches between dark and light themes using CSS custom properties and the [data-theme] attribute. User preference is saved in localStorage and persists across sessions.
+- **Toast Notification System** — Infrastructure alerts slide in from the right with CSS animations and auto-dismiss after 5 seconds. New alerts are periodically simulated to demonstrate real-time notifications.
 
-### Getting Started Guide
-1. Step 1: Description of step 1
-2. Step 2: Description of step 2
+### CSS Highlights
+- CSS custom properties for full theme support
+- CSS Grid and Flexbox-based responsive layouts
+- Keyframe animations (fadeSlide, pulse, toastIn, toastOut)
+- Smooth transitions on hover, focus, and state changes
+- Responsive design with media queries for tablet and mobile
+- Glassmorphism effects and custom scrollbar styling
 
-### Project Structure
-- Folder 1: Description of folder 1
-- Folder 2: Description of folder 2
+## Tech Stack
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- No external frameworks or libraries
 
-### Hosting Information
-- Hosting Provider: Description of hosting provider
-- Domain: description of domain
+## Getting Started
 
-## Last Updated
-**Date:** 2026-03-24 00:30:20 UTC
+Clone the repository:
+```bash
+git clone https://github.com/mandlikaditya/CloudDash.git
+```
+
+Open `index.html` in a web browser.
+
+No build tools or dependencies required.
+
+## Project Structure
+```
+├── index.html    # Main HTML structure
+├── styles.css    # All styles, theming, and responsive layout
+└── app.js        # Application logic and interactive features
+```
+
+## Hosting
+
+This is a static site and can be deployed to any hosting platform:
+- GitHub Pages
+- Netlify
+- Vercel
+- Any web server serving static files

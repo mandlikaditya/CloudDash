@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudDash — Infrastructure Monitor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="var(--accent)" stroke-width="2"/><path d="M8 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="11" r="2" fill="var(--accent)"/></svg>
+        <span class="logo-text">CloudDash</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </a>
+        <a href="#" class="nav-item" data-section="servers">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1" fill="currentColor"/><circle cx="6" cy="18" r="1" fill="currentColor"/></svg>
+          Servers
+        </a>
+        <a href="#" class="nav-item" data-section="alerts">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          Alerts
+          <span class="badge" id="alert-badge">3</span>
+        </a>
+        <a href="#" class="nav-item" data-section="settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="theme-toggle" id="theme-toggle" title="Toggle dark/light theme">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- HEADER -->
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+          <h1 class="page-title" id="page-title">Dashboard</h1>
+        </div>
+        <div class="top-bar-right">
+          <div class="search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="search-input" placeholder="Search resources..." />
+          </div>
+          <div class="user-avatar">AM</div>
+        </div>
+      </header>
+
+      <!-- SECTIONS -->
+      <div class="content-area" id="content-area">
+
+        <!-- ===== DASHBOARD SECTION ===== -->
+        <section class="section active" id="section-dashboard">
+          <!-- Stat Cards -->
+          <div class="stat-cards">
+            <div class="stat-card">
+              <div class="stat-icon green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1" fill="currentColor"/><circle cx="6" cy="18" r="1" fill="currentColor"/></svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-servers">12</span>
+                <span class="stat-label">Active Servers</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">99.97%</span>
+                <span class="stat-label">Uptime</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon orange">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-alerts">3</span>
+                <span class="stat-label">Active Alerts</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">2.4 TB</span>
+                <span class="stat-label">Data Transferred</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="charts-row">
+            <div class="chart-card wide">
+              <div class="chart-header">
+                <h3>CPU & Memory Usage (Last 60s)</h3>
+                <div class="chart-legend">
+                  <span class="legend-dot" style="background:var(--chart-blue)"></span> CPU
+                  <span class="legend-dot" style="background:var(--chart-green)"></span> Memory
+                </div>
+              </div>
+              <canvas id="chart-cpu" width="700" height="220"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Traffic by Region</h3>
+              </div>
+              <canvas id="chart-region" width="300" height="220"></canvas>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="activity-card">
+            <div class="chart-header">
+              <h3>Recent Activity</h3>
+            </div>
+            <ul class="activity-list" id="activity-list">
+              <!-- filled by JS -->
+            </ul>
+          </div>
+        </section>
+
+        <!-- ===== SERVERS SECTION ===== -->
+        <section class="section" id="section-servers">
+          <div class="section-toolbar">
+            <h2>Server Inventory</h2>
+            <div class="filter-group">
+              <select id="server-filter">
+                <option value="all">All Status</option>
+                <option value="running">Running</option>
+                <option value="warning">Warning</option>
+                <option value="stopped">Stopped</option>
+              </select>
+            </div>
+          </div>
+          <div class="server-grid" id="server-grid">
+            <!-- filled by JS -->
+          </div>
+        </section>
+
+        <!-- ===== ALERTS SECTION ===== -->
+        <section class="section" id="section-alerts">
+          <div class="section-toolbar">
+            <h2>Alert Center</h2>
+            <button class="btn-primary" id="btn-dismiss-all">Dismiss All</button>
+          </div>
+          <div class="alert-list" id="alert-list-main">
+            <!-- filled by JS -->
+          </div>
+        </section>
+
+        <!-- ===== SETTINGS SECTION ===== -->
+        <section class="section" id="section-settings">
+          <div class="settings-card">
+            <h2>Settings</h2>
+            <div class="setting-row">
+              <div>
+                <strong>Dark Mode</strong>
+                <p class="setting-desc">Toggle between dark and light themes</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="settings-theme-toggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting-row">
+              <div>
+                <strong>Live Chart Updates</strong>
+                <p class="setting-desc">Enable real-time data simulation on charts</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="settings-live-toggle" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting-row">
+              <div>
+                <strong>Alert Notifications</strong>
+                <p class="setting-desc">Show toast notifications for new alerts</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="settings-notif-toggle" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting-row">
+              <div>
+                <strong>Refresh Interval</strong>
+                <p class="setting-desc">How often charts update (seconds)</p>
+              </div>
+              <select id="settings-interval">
+                <option value="1">1s</option>
+                <option value="2" selected>2s</option>
+                <option value="5">5s</option>
+                <option value="10">10s</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
